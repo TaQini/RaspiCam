@@ -65,20 +65,23 @@ function picShow(string) {
 }
 
 function updateTime() {
-    var t=document.getElementById('sysTime')
     var timer=setInterval(function () {
-        var myDate = new Date();
-        var year = myDate.getFullYear();
-        var month = myDate.getMonth();
-        var day = myDate.getDay();
-        var hour = myDate.getHours();
-        var min = myDate.getMinutes();
-        var sec = myDate.getSeconds();
-        t.innerText = 'System time:';
-        t.innerText += ' '+year+'-'+month+'-'+day+' '+hour+':'+min+':'+sec;
+        alertTime();
     },1000)
 }
 
+function alertTime(argument) {
+    var t=document.getElementById('sysTime')
+    var myDate = new Date();
+    var year = myDate.getFullYear();
+    var month = myDate.getMonth()+1;
+    var day = myDate.getDate();
+    var hour = myDate.getHours();
+    var min = myDate.getMinutes();
+    var sec = myDate.getSeconds();
+    t.innerText = 'System time:';
+    t.innerText += ' '+year+'-'+month+'-'+day+' '+hour+':'+min+':'+sec;
+}
 </script>
 
 <title>RaspiCam System</title>
@@ -302,7 +305,7 @@ function updateTime() {
             <option value="58">58</option>
             <option value="59">59</option>
         </select>
-        <input type="submit" value="confirm" onclick="hideElement();updateTime();">
+        <input type="submit" value="confirm" onclick="hideElement()">
     </form>
 
     <form action="/index" method="post">
