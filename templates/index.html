@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>RaspiCam System</title>
+</head>
+    <body>
+	<form action="/index" method="post">
+		{% csrf_token %}
+		<input type="text" name="q">
+		<input type="submit" value="submit">
+        </form>
+	
+	<p>{{ hello }}</p>
+
+    </body>
+</html>
