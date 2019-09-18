@@ -10,10 +10,17 @@ def index(request):
     ctx = {}
     if request.POST:
         now = int(time())
-        stamp = strftime('%Y-%m-%d_%H%M%S',localtime(now))
+        stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
         file_dir = 'static/'
-        name = 'RaspiCam-'+stamp+'.jpg'
-        cmd = 'raspistill -w 2592 -h 1944 -t 10 -q 500 -o '
+        name = 'RaspiCam-'+stamp+'-%d.jpg'
+        w = '2592'
+        h = '1944'
+        q = '100'
+        t = '200'
+        l = '1000'
+        rot = '180'
+        cmd ='raspistill -w '+ w +' -h '+ h +' -t '+ t 
+        cmd += ' -l ' + l + ' -q ' + q + ' -rot '+ rot +' -o '
         cmd += file_dir+name
         system(cmd)
         sleep(1)

@@ -7,7 +7,37 @@
 <body>
     <form action="/index" method="post">
         {% csrf_token %}
-        <input type="submit" value="click">
+        resolution: 
+        <select name="r">
+            <option value="1">2592x1944(4:3)</option>
+            <option value="2">2048x1536(4:3)</option>
+            <option value="3">1600x1200(4:3)</option>
+            <option value="4">1280x960(4:3)</option>
+            <option value="5">2592x1458(16:9)</option>
+            <option value="6">2048x1152(16:9)</option>
+            <option value="7">1600x900(16:9)</option>
+            <option value="8">1280x720(16:9)</option>
+        </select>        
+        rotation: 
+        <select name="rot" style="width:70px;">
+            <option value="1">0</option>
+            <option value="2">90</option>
+            <option value="3">180</option>
+            <option value="4">270</option>
+        </select>
+        number:
+        <input type="text" name="n" value="1">
+		delay(ms):        
+        <input type="text" name="delay" value="200">
+        quality: 
+        <select name="q" style="width:70px;">
+            <option value="1">100</option>
+            <option value="2">95</option>
+            <option value="3">90</option>
+            <option value="4">80</option>
+            <option value="5">60</option>
+        </select>
+        <input type="submit" value="capture">
 	</br></br>
         <a href="/static/{{name}}">
             <img src="/static/{{name}}" width="640" height="480" title="{{name}}">
