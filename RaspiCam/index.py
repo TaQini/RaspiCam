@@ -13,7 +13,7 @@ def index(request):
         stamp = strftime('%Y-%m-%d_%H%M%S',localtime(now))
         file_dir = 'static/'
         name = 'RaspiCam-'+stamp+'.jpg'
-        cmd = 'raspistill -w 2592 -h 1944 -t 10 -q 100 -o '
+        cmd = 'raspistill -w 2592 -h 1944 -t 10 -q 500 -o '
         cmd += file_dir+name
         system(cmd)
         sleep(1)
