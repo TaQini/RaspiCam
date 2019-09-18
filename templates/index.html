@@ -4,14 +4,21 @@
 <meta charset="utf-8">
 <title>RaspiCam System</title>
 </head>
-    <body>
-	<form action="/index" method="post">
-		{% csrf_token %}
-		<input type="submit" value="click">
-	<p>
-	{{ path }}
-	<img src="/static/{{path}}" width="640" height="480"/>
-	</p>
-        </form>
-    </body>
+<body>
+    <form action="/index" method="post">
+        {% csrf_token %}
+        <input type="submit" value="click">
+	</br></br>
+        <a href="/static/{{name}}">
+            <img src="/static/{{name}}" width="640" height="480" title="{{name}}">
+        </a>
+
+        <p>More photos</p>
+        {% for item in file_list%}
+            <a href="/static/{{item}}">
+                <img src="/static/{{item}}" width="320" height="240" title="{{item}}">
+            </a>
+	{% endfor %}
+    </form>
+</body>
 </html>
