@@ -16,14 +16,15 @@ def index(request):
         w = '2592'
         h = '1944'
         q = '100'
-        t = '200'
-        l = '1000'
+        t = '5000'
+        tl = '1000'
+        # t = tl*(n-1)
         rot = '180'
         cmd ='raspistill -w '+ w +' -h '+ h +' -t '+ t 
-        cmd += ' -l ' + l + ' -q ' + q + ' -rot '+ rot +' -o '
+        cmd += ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
         cmd += file_dir+name
         system(cmd)
-        sleep(1)
-        ctx['name'] = name
+        sleep(8)
+        ctx['name'] = name%0
         ctx['file_list'] = listdir(file_dir)
     return render(request, "index.html", ctx)
