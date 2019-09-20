@@ -13,18 +13,22 @@ def index(request):
         stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
         file_dir = 'static/'
         name = 'RaspiCam-'+stamp+'-%d.jpg'
-        w = '2592'
-        h = '1944'
-        q = '100'
-        t = '5000'
-        tl = '1000'
+        r = request.POST.get('r',None).split('x')
+        w,h = (r[0],r[1])
+        q = request.POST.get('q',None)
+        n = int(request.POST.get('n',None))
+        delay = int(request.POST.get('delay',None))
+        t = str((n-1)*delay*1000)
+        tl = str(delay)
         # t = tl*(n-1)
-        rot = '180'
+        rot = request.POST.get('rot',None)
         cmd ='raspistill -w '+ w +' -h '+ h +' -t '+ t 
         cmd += ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
         cmd += file_dir+name
         system(cmd)
-        sleep(8)
+        sleep(n*delay)
         ctx['name'] = name%0
         ctx['file_list'] = listdir(file_dir)
+        ctx['aaa'] = (w,h,n,delay,t,tl)
     return render(request, "index.html", ctx)
+
