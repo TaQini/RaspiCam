@@ -12,23 +12,31 @@ def index(request):
         now = int(time())
         stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
         file_dir = 'static/'
-        name = 'RaspiCam-'+stamp+'-%d.jpg'
         r = request.POST.get('r',None).split('x')
         w,h = (r[0],r[1])
         q = request.POST.get('q',None)
         n = int(request.POST.get('n',None))
         delay = int(request.POST.get('delay',None))
-        t = str((n-1)*delay*1000)
-        tl = str(delay)
-        # t = tl*(n-1)
         rot = request.POST.get('rot',None)
-        cmd ='raspistill -w '+ w +' -h '+ h +' -t '+ t 
-        cmd += ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
+        cmd ='raspistill -w '+ w +' -h '+ h 
+        if(n!=1):
+            t = str((n-1)*delay)
+            tl = str(delay)
+            name = 'RaspiCam-'+stamp+'-%d.jpg'
+            cmd += ' -t '+ t + ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
+            ctx['name'] = name%0
+        else:
+            t = str(delay)
+            name = 'RaspiCam-'+stamp+'-0.jpg'
+            ctx['name'] = name
+            cmd += ' -t ' +t + ' -q ' + q + ' -rot '+ rot +' -o '
         cmd += file_dir+name
         system(cmd)
-        sleep(n*delay)
-        ctx['name'] = name%0
-        ctx['file_list'] = listdir(file_dir)
-        ctx['aaa'] = (w,h,n,delay,t,tl)
+        #if(n==1):
+            #sleep(delay/800.0)
+        file_list = listdir(file_dir)
+        file_list.sort()
+        ctx['file_list'] = file_list
+        ctx['aaa'] = (cmd)
     return render(request, "index.html", ctx)
 
