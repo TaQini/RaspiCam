@@ -19,5 +19,7 @@ from django.conf.urls.static import static
 from django.conf.urls import url
 
 urlpatterns = [
-    url(r'^index$', index.index)
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+	url(r'^$',index.index),
+	url(r'^index$', index.index),
+	url(r'^manage$', index.manage),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 

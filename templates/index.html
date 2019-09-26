@@ -2,14 +2,60 @@
 <html>
 <head>
 <meta charset="utf-8">
+<style type="text/css"> 
+a{    
+    text-decoration:none;
+    color:black;
+}
+a:hover{
+    color:black;
+}
+.div1{
+    width:320px;
+    height:240px;
+}
+.div2{
+    display:table-cell;
+    vertical-align:bottom;
+    width: 320px;
+    height: 30px;
+    top: 210px;
+    filter:alpha(Opacity=80);
+    -moz-opacity:0.7;
+    opacity: 0.7;
+    position: relative;
+    background-color: white;
+}
+td{
+    padding-left:  0px;
+    padding-right: 10px;
+}
+
+</style>
+<script type="text/javascript">
+function checkOrCancelAll() {
+    var chElt=document.getElementById("chElt");
+    var checkedElt = chElt.checked;
+    var allCheck = document.getElementsByName("pic");
+    if(checkedElt) {
+        for(var i=0;i<allCheck.length;i++) {
+            allCheck[i].checked=true;
+        }
+    }
+    else {
+        for(var i=0;i<allCheck.length;i++) {
+            allCheck[i].checked=false;
+        }
+    }
+}
+</script>
 <title>RaspiCam System</title>
 </head>
 <body>
     <form action="/index" method="post">
         {% csrf_token %}
-
-	DEBUG: {{ aaa }}
-	</br>
+    DEBUG: {{ aaa }}
+    </br>
         resolution: 
         <select name="r">
             <option value="2592x1944">2592x1944(4:3)</option>
@@ -30,7 +76,7 @@
         </select>
         number:
         <input type="text" name="n" value="1" size="2">
-		delay(ms):
+        delay(ms):
         <input type="text" name="delay" value="1000" size="3">
         quality: 
         <select name="q" style="width:70px;">
@@ -41,17 +87,38 @@
             <option value="60">60</option>
         </select>
         <input type="submit" value="capture">
-	</br></br>
-        <a href="/static/{{name}}">
-            <img src="/static/{{name}}" height="480" title="{{name}}">
-        </a>
+        </br>
+		
+		{% if name %}
+	        <a href="/static/{{name}}">
+	            <img src="/static/{{name}}" height="480" title="{{name}}">
+	        </a>
+		{% endif %}
 
-        <p>More photos</p>
+    </form>
+    <form action="/manage" method="post">
+        {% csrf_token %}
+
+		<table border="0">		
+        	<tr>
+				<td> <input type="submit" name="manage" value="manage"> </td>
+				<td> <input type="submit" name="download" value="download"> </td>
+				<td> <input type="submit" name="delete" value="delete"> </td>
+				<td> <input type="checkbox" id="chElt" onclick="checkOrCancelAll();"/>select all</td>
+			</tr>
+		</table>
         {% for item in file_list%}
-            <a href="/static/{{item}}">
-                <img src="/static/{{item}}" width="320" height="240" title="{{item}}">
-            </a>
-	{% endfor %}
+            <div class="div1" style="background:url('/static/{{item}}') no-repeat;background-size: 100% 100%;"> 
+                <div class="div2">
+                    <input type="checkbox" name="pic" value="{{item}}" />
+                    <a href="/static/{{item}}">
+                        {{ item }}
+                    </a>
+                </div>
+            </div>
+            </br>
+        {% endfor %}
+
     </form>
 </body>
 </html>

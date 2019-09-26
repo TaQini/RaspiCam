@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>RaspiCam System - download file now </title>
+
+</head>
+<body>
+	Downloading 
+    <a href="{{file}}" download="{{name}}" id='dl'> 
+        {{name}} 
+    </a>
+    ...
+    <script type="text/javascript">
+    	var aLink=document.getElementById("dl");
+		aLink.click()
+	</script>
+
+	<div id="box">
+	    back in 
+	    <span id="Os">5</span>
+	     s ... if not work pleace click 
+    	<a href="/index">
+			here
+		</a>
+	</div>
+	<script>
+	    var Os=document.getElementById("Os");
+	    var num=5;
+	    var timer=setInterval(function () {
+        	num--;
+	        Os.innerText=num;
+	        if(num==0){
+	            num=5;
+	            window.location.href="/index";
+	        }
+	    },1000)
+	    function stop() {
+	        clearInterval(timer);
+	    }
+	</script>
+</body>
+</html>

@@ -6,12 +6,24 @@ from time import time, localtime, strftime
 from os import system,listdir
 from time import sleep
 
+ctx = {}
+file_dir = 'static/'
+
+def refresh():
+    global ctx
+    file_list = listdir(file_dir)
+    file_list.remove('download')
+    file_list.sort(reverse=True)
+    ctx['file_list'] = file_list
+
 def index(request):
-    ctx = {}
+    global ctx
+    if request:
+        refresh()
     if request.POST:
+        # fetch args for cmd raspistill 
         now = int(time())
         stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
-        file_dir = 'static/'
         r = request.POST.get('r',None).split('x')
         w,h = (r[0],r[1])
         q = request.POST.get('q',None)
@@ -32,11 +44,41 @@ def index(request):
             ctx['name'] = name
         cmd += file_dir+name
         system(cmd)
-        #if(n==1):
+        #if(n==1): # no need maybe
             #sleep(delay/800.0)
-        file_list = listdir(file_dir)
-        file_list.sort()
-        ctx['file_list'] = file_list
+        refresh()
         ctx['aaa'] = (cmd)
     return render(request, "index.html", ctx)
 
+def manage(request):
+    global ctx
+    if request.POST:
+        pic_str = ''
+        pic_list = request.POST.getlist('pic',None)
+        for i in pic_list:
+            pic_str += file_dir+i+' '
+        if 'download' in request.POST and pic_list:
+            # package pics to zip and download it
+            dl = {}
+            down_dir = 'download/'
+            now = int(time())
+            stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
+            file_name = 'RaspiCam-'+stamp+'.zip'
+            output_file = file_dir+down_dir+file_name
+            dl['file'] = output_file
+            dl['name'] = file_name
+            cmd  = 'zip -1 -o '+ output_file + ' '
+            cmd += pic_str
+            system(cmd)
+            ctx['aaa'] = cmd
+            return render(request, "download.html", dl)
+        if 'delete' in request.POST and pic_list:
+            cmd = 'rm '
+            cmd += pic_str
+            system(cmd)
+            ctx['aaa'] = cmd
+        if 'manage' in request.POST:
+            pass
+        refresh()
+        ctx['name']=''
+    return render(request, "index.html", ctx)
