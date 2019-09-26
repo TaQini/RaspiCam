@@ -28,8 +28,8 @@ def index(request):
         else:
             t = str(delay)
             name = 'RaspiCam-'+stamp+'-0.jpg'
-            ctx['name'] = name
             cmd += ' -t ' +t + ' -q ' + q + ' -rot '+ rot +' -o '
+            ctx['name'] = name
         cmd += file_dir+name
         system(cmd)
         #if(n==1):
