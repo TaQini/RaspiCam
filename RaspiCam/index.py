@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.decorators import csrf
 from os import system,listdir
 from .settings import STATICFILES_DIRS
+from time import time,strftime,localtime
 
 ctx = {}
 file_dir = STATICFILES_DIRS[0]+'/'
@@ -65,10 +66,20 @@ def manage(request):
             # package pics to zip and download it
             dl = {}
             down_dir = 'download/'
+
             now = int(time())
             # systime = strftime('%Y-%m-%d %H:%M:%S',localtime(now))
             stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
-            file_name = 'RaspiCam-'+stamp+'.zip'
+
+            # sys_year = int(request.POST.get('sys_year',None))
+            # sys_month = int(request.POST.get('sys_month',None))
+            # sys_day = int(request.POST.get('sys_day',None))
+            # sys_hour = int(request.POST.get('sys_hour',None))
+            # sys_min = int(request.POST.get('sys_min',None))
+            # sys_sec = int(request.POST.get('sys_sec',None))
+            # stamp = '%4d%02d%02d_%02d%02d%02d'%(sys_year, sys_month, sys_day, sys_hour, sys_min, sys_sec)
+
+            file_name = 'RaspiCam_'+stamp+'.zip'
             output_file = file_dir+down_dir+file_name
             dl['name'] = file_name
             cmd  = 'zip -1 -o '+ output_file + ' '
