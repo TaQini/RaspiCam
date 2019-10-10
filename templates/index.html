@@ -72,7 +72,21 @@ function picShow(string) {
 
     DEBUG: {{ aaa }}
     </br>
-
+    <b id='sysTime'>System time: </b>
+    <script type="text/javascript">
+        var t=document.getElementById('sysTime')
+        var timer=setInterval(function () {
+            var myDate = new Date();
+            var year = myDate.getFullYear();
+            var month = myDate.getMonth();
+            var day = myDate.getDay();
+            var hour = myDate.getHours();
+            var min = myDate.getMinutes();
+            var sec = myDate.getSeconds();
+            t.innerText = 'System time:';
+            t.innerText += ' '+year+'-'+month+'-'+day+' '+hour+':'+min+':'+sec;
+        },1000)
+    </script>
     <input type="submit" name="setting" value="Date & Time Setting" onclick="hideElement()">
     <form id='div_h' action="/clock" method="post">
         {% csrf_token %}

@@ -64,6 +64,7 @@ def manage(request):
             dl = {}
             down_dir = 'download/'
             now = int(time())
+            # systime = strftime('%Y-%m-%d %H:%M:%S',localtime(now))
             stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
             file_name = 'RaspiCam-'+stamp+'.zip'
             output_file = file_dir+down_dir+file_name
@@ -93,8 +94,8 @@ def clock(request):
         hour = request.POST.get('hour',None)
         min = request.POST.get('min',None)
         sec = request.POST.get('sec',None)
-        # cmd = 'sudo date -s '
-        cmd = 'date -s '
+        cmd = 'sudo date -s '
+        # cmd = 'date -s '
         cmd += '"'
         cmd += '%s-%s-%s %s:%s:%s'%(year,month,day,hour,min,sec)
         cmd += '"'

@@ -1,0 +1,7 @@
+#!/usr/bin/python
+from sys import argv
+import os
+#cmd = 'raspistill -w 2592 -h 1944 -t 10 -q 100 -o '
+a = argv[-1]
+cmd = a
+os.system('cp /home/taqini/Pictures/Webcam/2019-09-18-091047.jpg '+cmd)
