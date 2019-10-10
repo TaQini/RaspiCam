@@ -6,18 +6,17 @@
 
 </head>
 <body>
-    Downloading 
-    <a href="{{file}}" download="{{name}}" id='dl'> 
-        {{name}} 
-    </a>
-    ...
+	</br>
     <div id="box">
-        after 
-        <span id="Os">5</span>
-         s ... or click 
+        Downloading 
+        <a href="/static/download/{{name}}" download="/static/download/{{name}}" id='dl'> {{name}} </a>  
+        after <span id="Os">5</span>s ... 
+        </br>
+        go back please click 
         <a href="/index">
-            here to download.
+            here
         </a>
+        .
     </div>
     <script type="text/javascript">
         var aLink=document.getElementById("dl");
@@ -31,7 +30,7 @@
             }
             if(num<0){
             	Os.innerText=0;
-                window.location.href="/index";
+                // window.location.href="/index";
             }
         },1000)
         function stop() {

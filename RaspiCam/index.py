@@ -5,9 +5,10 @@ from django.views.decorators import csrf
 from time import time, localtime, strftime
 from os import system,listdir
 from time import sleep
+from .settings import STATICFILES_DIRS
 
 ctx = {}
-file_dir = 'static/'
+file_dir = STATICFILES_DIRS[0]+'/'
 
 def refresh():
     global ctx
@@ -47,7 +48,8 @@ def index(request):
         #if(n==1): # no need maybe
             #sleep(delay/800.0)
         refresh()
-        ctx['aaa'] = (cmd)
+        # ctx['aaa'] x= (cmd)
+        ctx['aaa'] = file_dir
     return render(request, "index.html", ctx)
 
 def manage(request):
@@ -65,7 +67,6 @@ def manage(request):
             stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
             file_name = 'RaspiCam-'+stamp+'.zip'
             output_file = file_dir+down_dir+file_name
-            dl['file'] = output_file
             dl['name'] = file_name
             cmd  = 'zip -1 -o '+ output_file + ' '
             cmd += pic_str

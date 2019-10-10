@@ -69,10 +69,14 @@ function picShow(string) {
 <title>RaspiCam System</title>
 </head>
 <body>
-    <input type="submit" name="setting" value="setting" onclick="hideElement()">
+
+    DEBUG: {{ aaa }}
+    </br>
+
+    <input type="submit" name="setting" value="Date & Time Setting" onclick="hideElement()">
     <form id='div_h' action="/clock" method="post">
         {% csrf_token %}
-        date:
+        Date:
         <select name="year">
             <option value="2019">2019</option>
             <option value="2020">2020</option>
@@ -127,7 +131,7 @@ function picShow(string) {
             <option value="30">30</option>
             <option value="31">31</option>
         </select>
-        time:
+        Time:
         <select name="hour">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -285,9 +289,7 @@ function picShow(string) {
 
     <form action="/index" method="post">
         {% csrf_token %}
-        DEBUG: {{ aaa }}
-        </br>
-        resolution: 
+        Resolution: 
         <select name="r">
             <option value="2592x1944">2592x1944(4:3)</option>
             <option value="2048x1536">2048x1536(4:3)</option>
@@ -298,18 +300,18 @@ function picShow(string) {
             <option value="1600x900">1600x900(16:9)</option>
             <option value="1280x720">1280x720(16:9)</option>
         </select>        
-        rotation: 
+        Rotation: 
         <select name="rot">
             <option value="0">0</option>
             <option value="90">90</option>
             <option value="180" selected="selected">180</option>
             <option value="270">270</option>
         </select>
-        number:
+        Number:
         <input type="text" name="n" value="1" size="2">
-        delay(ms):
+        Delay(ms):
         <input type="text" name="delay" value="1000" size="3">
-        quality: 
+        Quality: 
         <select name="q" style="width:70px;">
             <option value="100">100</option>
             <option value="90">90</option>
@@ -318,7 +320,7 @@ function picShow(string) {
             <option value="60">60</option>
         </select>
         </br>
-        <input type="submit" value="capture" style="height:50px;">
+        <input type="submit" value="Capture" style="height:50px;">
         </br>
         
         {% if name %}
@@ -333,10 +335,10 @@ function picShow(string) {
 
         <table border="0">        
             <tr>
-                <td> <input type="submit" name="manage" value="manage"> </td>
-                <td> <input type="submit" name="download" value="download"> </td>
-                <td> <input type="submit" name="delete" value="delete"> </td>
-                <td> <input type="checkbox" id="chElt" onclick="checkOrCancelAll();"/>select all</td>
+                <td> <input type="submit" name="manage" value="Manage"> </td>
+                <td> <input type="submit" name="download" value="Download"> </td>
+                <td> <input type="submit" name="delete" value="Delete"> </td>
+                <td> <input type="checkbox" id="chElt" onclick="checkOrCancelAll();"/>Select all</td>
             </tr>
         </table>
         {% for item in file_list%}
