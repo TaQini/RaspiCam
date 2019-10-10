@@ -2,9 +2,7 @@
 
 from django.shortcuts import render
 from django.views.decorators import csrf
-from time import time, localtime, strftime
 from os import system,listdir
-from time import sleep
 from .settings import STATICFILES_DIRS
 
 ctx = {}
@@ -23,8 +21,14 @@ def index(request):
         refresh()
     if request.POST:
         # fetch args for cmd raspistill 
-        now = int(time())
-        stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
+        sys_year = int(request.POST.get('sys_year',None))
+        sys_month = int(request.POST.get('sys_month',None))
+        sys_day = int(request.POST.get('sys_day',None))
+        sys_hour = int(request.POST.get('sys_hour',None))
+        sys_min = int(request.POST.get('sys_min',None))
+        sys_sec = int(request.POST.get('sys_sec',None))
+        stamp = '%4d%02d%02d_%02d%02d%02d'%(sys_year, sys_month, sys_day, sys_hour, sys_min, sys_sec)
+
         r = request.POST.get('r',None).split('x')
         w,h = (r[0],r[1])
         q = request.POST.get('q',None)
@@ -32,6 +36,7 @@ def index(request):
         delay = int(request.POST.get('delay',None))
         rot = request.POST.get('rot',None)
         cmd ='raspistill -w '+ w +' -h '+ h 
+
         if(n!=1):
             t = str((n-1)*delay)
             tl = str(delay)
@@ -45,11 +50,8 @@ def index(request):
             ctx['name'] = name
         cmd += file_dir+name
         system(cmd)
-        #if(n==1): # no need maybe
-            #sleep(delay/800.0)
         refresh()
-        # ctx['aaa'] x= (cmd)
-        ctx['aaa'] = file_dir
+        ctx['aaa'] = (cmd)
     return render(request, "index.html", ctx)
 
 def manage(request):
@@ -80,25 +82,25 @@ def manage(request):
             system(cmd)
             ctx['aaa'] = cmd
         if 'manage' in request.POST:
-            pass
+            ctx['aaa'] = 'clear info'
         refresh()
         ctx['name']=''
     return render(request, "index.html", ctx)
 
-def clock(request):
-    global ctx
-    if request.POST:
-        year = request.POST.get('year',None)
-        month = request.POST.get('month',None)
-        day = request.POST.get('day',None)
-        hour = request.POST.get('hour',None)
-        min = request.POST.get('min',None)
-        sec = request.POST.get('sec',None)
-        cmd = 'sudo date -s '
-        # cmd = 'date -s '
-        cmd += '"'
-        cmd += '%s-%s-%s %s:%s:%s'%(year,month,day,hour,min,sec)
-        cmd += '"'
-        ctx['aaa'] = (cmd)
-        system(cmd)
-    return render(request, "index.html",ctx)
+# def clock(request):
+#     global ctx
+#     if request.POST:
+#         year = request.POST.get('year',None)
+#         month = request.POST.get('month',None)
+#         day = request.POST.get('day',None)
+#         hour = request.POST.get('hour',None)
+#         min = request.POST.get('min',None)
+#         sec = request.POST.get('sec',None)
+#         cmd = 'sudo date -s '
+#         # cmd = 'date -s '
+#         cmd += '"'
+#         cmd += '%s-%s-%s %s:%s:%s'%(year,month,day,hour,min,sec)
+#         cmd += '"'
+#         ctx['aaa'] = (cmd)
+#         system(cmd)
+#     return render(request, "index.html",ctx)

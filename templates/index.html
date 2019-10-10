@@ -30,7 +30,7 @@ td{
     padding-left:  0px;
     padding-right: 10px;
 }
-#div_h{
+#hiddenEle{
     visibility:hidden;
 }
 </style>
@@ -52,11 +52,11 @@ function checkOrCancelAll() {
 }
 
 function hideElement() {
-    if (document.getElementById("div_h").style.visibility=="visible") {
-        document.getElementById("div_h").style.visibility="hidden";
+    if (document.getElementById("hiddenEle").style.visibility=="visible") {
+        document.getElementById("hiddenEle").style.visibility="hidden";
     }
     else {
-        document.getElementById("div_h").style.visibility="visible";
+        document.getElementById("hiddenEle").style.visibility="visible";
     }
 }
 
@@ -71,7 +71,7 @@ function updateTime() {
 }
 
 function alertTime(argument) {
-    var t=document.getElementById('sysTime')
+    var t=document.getElementById('sysTime');
     var myDate = new Date();
     var year = myDate.getFullYear();
     var month = myDate.getMonth()+1;
@@ -79,7 +79,13 @@ function alertTime(argument) {
     var hour = myDate.getHours();
     var min = myDate.getMinutes();
     var sec = myDate.getSeconds();
-    t.innerText = 'System time:';
+    document.getElementById('sys_year').value = year;
+    document.getElementById('sys_month').value = month;
+    document.getElementById('sys_day').value = day;
+    document.getElementById('sys_hour').value = hour;
+    document.getElementById('sys_min').value = min;
+    document.getElementById('sys_sec').value = sec;
+    t.innerText = 'Current time:';
     t.innerText += ' '+year+'-'+month+'-'+day+' '+hour+':'+min+':'+sec;
 }
 </script>
@@ -87,263 +93,63 @@ function alertTime(argument) {
 <title>RaspiCam System</title>
 </head>
 <body>
-
     DEBUG: {{ aaa }}
-    </br>
-    <b id='sysTime'>System time: </b>
+    </br>    
+    <b id='sysTime'>Current time: loading...</b>
     <script type="text/javascript">
         updateTime();
     </script>
-    <input type="submit" name="setting" value="Date & Time Setting" onclick="hideElement()">
-    <form id='div_h' action="/clock" method="post">
-        {% csrf_token %}
-        Date:
-        <select name="year">
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-        </select>        
 
-        <select name="month">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6" selected="selected">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-        </select>
-
-        <select name="day">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15" selected="selected">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30">30</option>
-            <option value="31">31</option>
-        </select>
-        Time:
-        <select name="hour">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12" selected="selected">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-        </select>
-
-        <select name="min">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30" selected="selected">30</option>
-            <option value="31">31</option>
-            <option value="32">32</option>
-            <option value="33">33</option>
-            <option value="34">34</option>
-            <option value="35">35</option>
-            <option value="36">36</option>
-            <option value="37">37</option>
-            <option value="38">38</option>
-            <option value="39">39</option>
-            <option value="40">40</option>
-            <option value="41">41</option>
-            <option value="42">42</option>
-            <option value="43">43</option>
-            <option value="44">44</option>
-            <option value="45">45</option>
-            <option value="46">46</option>
-            <option value="47">47</option>
-            <option value="48">48</option>
-            <option value="49">49</option>
-            <option value="50">50</option>
-            <option value="51">51</option>
-            <option value="52">52</option>
-            <option value="53">53</option>
-            <option value="54">54</option>
-            <option value="55">55</option>
-            <option value="56">56</option>
-            <option value="57">57</option>
-            <option value="58">58</option>
-            <option value="59">59</option>
-        </select>
-
-        <select name="sec">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30">30</option>
-            <option value="31">31</option>
-            <option value="32">32</option>
-            <option value="33">33</option>
-            <option value="34">34</option>
-            <option value="35">35</option>
-            <option value="36">36</option>
-            <option value="37">37</option>
-            <option value="38">38</option>
-            <option value="39">39</option>
-            <option value="40">40</option>
-            <option value="41">41</option>
-            <option value="42">42</option>
-            <option value="43">43</option>
-            <option value="44">44</option>
-            <option value="45">45</option>
-            <option value="46">46</option>
-            <option value="47">47</option>
-            <option value="48">48</option>
-            <option value="49">49</option>
-            <option value="50">50</option>
-            <option value="51">51</option>
-            <option value="52">52</option>
-            <option value="53">53</option>
-            <option value="54">54</option>
-            <option value="55">55</option>
-            <option value="56">56</option>
-            <option value="57">57</option>
-            <option value="58">58</option>
-            <option value="59">59</option>
-        </select>
-        <input type="submit" value="confirm" onclick="hideElement()">
-    </form>
 
     <form action="/index" method="post">
         {% csrf_token %}
-        Resolution: 
-        <select name="r">
-            <option value="2592x1944">2592x1944(4:3)</option>
-            <option value="2048x1536">2048x1536(4:3)</option>
-            <option value="1600x1200">1600x1200(4:3)</option>
-            <option value="1280x960" selected="selected">1280x960(4:3)</option>
-            <option value="2592x1458">2592x1458(16:9)</option>
-            <option value="2048x1152">2048x1152(16:9)</option>
-            <option value="1600x900">1600x900(16:9)</option>
-            <option value="1280x720">1280x720(16:9)</option>
-        </select>        
-        Rotation: 
-        <select name="rot">
-            <option value="0">0</option>
-            <option value="90">90</option>
-            <option value="180" selected="selected">180</option>
-            <option value="270">270</option>
-        </select>
-        Number:
-        <input type="text" name="n" value="1" size="2">
-        Delay(ms):
-        <input type="text" name="delay" value="1000" size="3">
-        Quality: 
-        <select name="q" style="width:70px;">
-            <option value="100">100</option>
-            <option value="90">90</option>
-            <option value="85" selected="selected">85</option>
-            <option value="70">80</option>
-            <option value="60">60</option>
-        </select>
-        </br>
+
+        <input type="hidden" id="sys_year" name="sys_year" value="">
+        <input type="hidden" id="sys_month" name="sys_month" value="">
+        <input type="hidden" id="sys_day" name="sys_day" value="">
+        <input type="hidden" id="sys_hour" name="sys_hour" value="">
+        <input type="hidden" id="sys_min" name="sys_min" value="">
+        <input type="hidden" id="sys_sec" name="sys_sec" value="">
+
+        <input type="button" value="Setting" style="height:50px;" onclick="hideElement()">
         <input type="submit" value="Capture" style="height:50px;">
-        </br>
-        
+
+        <div id="hiddenEle">
+            Resolution: 
+            <select name="r">
+                <option value="2592x1944">2592x1944(4:3)</option>
+                <option value="2048x1536">2048x1536(4:3)</option>
+                <option value="1600x1200">1600x1200(4:3)</option>
+                <option value="1280x960" selected="selected">1280x960(4:3)</option>
+                <option value="2592x1458">2592x1458(16:9)</option>
+                <option value="2048x1152">2048x1152(16:9)</option>
+                <option value="1600x900">1600x900(16:9)</option>
+                <option value="1280x720">1280x720(16:9)</option>
+            </select>        
+
+            Rotation: 
+            <select name="rot">
+                <option value="0">0</option>
+                <option value="90">90</option>
+                <option value="180" selected="selected">180</option>
+                <option value="270">270</option>
+            </select>
+
+            Number:
+            <input type="text" name="n" value="1" size="2">
+
+            Delay(ms):
+            <input type="text" name="delay" value="1000" size="3">
+
+            Quality: 
+            <select name="q" style="width:70px;">
+                <option value="100">100</option>
+                <option value="90">90</option>
+                <option value="85" selected="selected">85</option>
+                <option value="70">80</option>
+                <option value="60">60</option>
+            </select>
+        </div>
         {% if name %}
             <a href="/static/{{name}}" target="_blank">
                 <img src="/static/{{name}}" height="480" title="{{name}}">
@@ -359,7 +165,7 @@ function alertTime(argument) {
                 <td> <input type="submit" name="manage" value="Manage"> </td>
                 <td> <input type="submit" name="download" value="Download"> </td>
                 <td> <input type="submit" name="delete" value="Delete"> </td>
-                <td> <input type="checkbox" id="chElt" onclick="checkOrCancelAll();"/>Select all</td>
+                <td> <input type="checkbox" id="chElt" onclick="checkOrCancelAll();">Select all</td>
             </tr>
         </table>
         {% for item in file_list%}

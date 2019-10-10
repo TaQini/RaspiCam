@@ -22,5 +22,5 @@ urlpatterns = [
 	url(r'^$',index.index),
 	url(r'^index$', index.index),
 	url(r'^manage$', index.manage),
-	url(r'^clock$', index.clock),
+	# url(r'^clock$', index.clock),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
