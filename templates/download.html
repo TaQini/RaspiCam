@@ -11,26 +11,23 @@
         {{name}} 
     </a>
     ...
-    <script type="text/javascript">
-    	var aLink=document.getElementById("dl");
-		aLink.click()
-	</script>
-
 	<div id="box">
-	    back in 
+	    after 
 	    <span id="Os">5</span>
-	     s ... if not work pleace click 
+	     s ... or click 
     	<a href="/index">
-			here
+			here to download.
 		</a>
 	</div>
-	<script>
+    <script type="text/javascript">
+    	var aLink=document.getElementById("dl");
 	    var Os=document.getElementById("Os");
 	    var num=5;
 	    var timer=setInterval(function () {
         	num--;
 	        Os.innerText=num;
 	        if(num==0){
+				aLink.click()
 	            num=5;
 	            window.location.href="/index";
 	        }

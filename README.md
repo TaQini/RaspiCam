@@ -8,6 +8,7 @@
  - raspistill
  - hostapd, dnsmasq
  - git, zsh
+ - zip
 
 # install 
 ```
