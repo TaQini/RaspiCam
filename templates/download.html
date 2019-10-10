@@ -2,39 +2,41 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>RaspiCam System - download file now </title>
+<title>RaspiCam System - Files downloading </title>
 
 </head>
 <body>
-	Downloading 
+    Downloading 
     <a href="{{file}}" download="{{name}}" id='dl'> 
         {{name}} 
     </a>
     ...
-	<div id="box">
-	    after 
-	    <span id="Os">5</span>
-	     s ... or click 
-    	<a href="/index">
-			here to download.
-		</a>
-	</div>
+    <div id="box">
+        after 
+        <span id="Os">5</span>
+         s ... or click 
+        <a href="/index">
+            here to download.
+        </a>
+    </div>
     <script type="text/javascript">
-    	var aLink=document.getElementById("dl");
-	    var Os=document.getElementById("Os");
-	    var num=5;
-	    var timer=setInterval(function () {
-        	num--;
-	        Os.innerText=num;
-	        if(num==0){
-				aLink.click()
-	            num=5;
-	            window.location.href="/index";
-	        }
-	    },1000)
-	    function stop() {
-	        clearInterval(timer);
-	    }
-	</script>
+        var aLink=document.getElementById("dl");
+        var Os=document.getElementById("Os");
+        var num=5;
+        var timer=setInterval(function () {
+            num--;
+            Os.innerText=num;
+            if(num==0){
+                aLink.click()
+            }
+            if(num<0){
+            	Os.innerText=0;
+                window.location.href="/index";
+            }
+        },1000)
+        function stop() {
+            clearInterval(timer);
+        }
+    </script>
 </body>
 </html>

@@ -82,3 +82,21 @@ def manage(request):
         refresh()
         ctx['name']=''
     return render(request, "index.html", ctx)
+
+def clock(request):
+    global ctx
+    if request.POST:
+        year = request.POST.get('year',None)
+        month = request.POST.get('month',None)
+        day = request.POST.get('day',None)
+        hour = request.POST.get('hour',None)
+        min = request.POST.get('min',None)
+        sec = request.POST.get('sec',None)
+        # cmd = 'sudo date -s '
+        cmd = 'date -s '
+        cmd += '"'
+        cmd += '%s-%s-%s %s:%s:%s'%(year,month,day,hour,min,sec)
+        cmd += '"'
+        ctx['aaa'] = (cmd)
+        system(cmd)
+    return render(request, "index.html",ctx)
