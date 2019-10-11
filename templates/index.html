@@ -38,7 +38,7 @@ td{
 function checkOrCancelAll() {
     var chElt=document.getElementById("chElt");
     var checkedElt = chElt.checked;
-    var allCheck = document.getElementsByName("pic");
+    var allCheck = document.getElementsByName("picture");
     if(checkedElt) {
         for(var i=0;i<allCheck.length;i++) {
             allCheck[i].checked=true;
@@ -100,7 +100,6 @@ function alertTime(argument) {
         updateTime();
     </script>
 
-
     <form action="/index" method="post">
         {% csrf_token %}
 
@@ -111,8 +110,8 @@ function alertTime(argument) {
         <input type="hidden" id="sys_min" name="sys_min" value="">
         <input type="hidden" id="sys_sec" name="sys_sec" value="">
 
-        <input type="button" value="Setting" style="height:50px;" onclick="hideElement()">
-        <input type="submit" value="Capture" style="height:50px;">
+        <input type="button" value="Setting" name="setting" style="height:50px;" onclick="hideElement()">
+        <input type="submit" value="Capture" name="capture" style="height:50px;">
 
         <div id="hiddenEle">
             Resolution: 
@@ -155,10 +154,8 @@ function alertTime(argument) {
                 <img src="/static/{{name}}" height="480" title="{{name}}">
             </a>
         {% endif %}
-    </form>
 
-    <form action="/manage" method="post">
-        {% csrf_token %}
+        </br>
 
         <table border="0">        
             <tr>
@@ -171,7 +168,7 @@ function alertTime(argument) {
         {% for item in file_list%}
             <div class="div1" style="background:url('/static/{{item}}') no-repeat;background-size: 100% 100%;" onclick="picShow('{{item}}')"> 
                 <div class="div2">
-                    <input type="checkbox" name="pic" value="{{item}}" />
+                    <input type="checkbox" name="picture" value="{{item}}" />
                     <a href="/static/{{item}}" target="_blank">
                         {{ item }}
                     </a>
@@ -179,7 +176,7 @@ function alertTime(argument) {
             </div>
             </br>
         {% endfor %}
-
     </form>
+
 </body>
 </html>

@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.views.decorators import csrf
 from os import system,listdir
 from .settings import STATICFILES_DIRS
-from time import time,strftime,localtime
 
 ctx = {}
 file_dir = STATICFILES_DIRS[0]+'/'
@@ -30,59 +29,45 @@ def index(request):
         sys_sec = int(request.POST.get('sys_sec',None))
         stamp = '%4d%02d%02d_%02d%02d%02d'%(sys_year, sys_month, sys_day, sys_hour, sys_min, sys_sec)
 
-        r = request.POST.get('r',None).split('x')
-        w,h = (r[0],r[1])
-        q = request.POST.get('q',None)
-        n = int(request.POST.get('n',None))
-        delay = int(request.POST.get('delay',None))
-        rot = request.POST.get('rot',None)
-        cmd ='raspistill -w '+ w +' -h '+ h 
-
-        if(n!=1):
-            t = str((n-1)*delay)
-            tl = str(delay)
-            name = 'RaspiCam-'+stamp+'-%d.jpg'
-            cmd += ' -t '+ t + ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
-            ctx['name'] = name%0
-        else:
-            t = str(delay)
-            name = 'RaspiCam-'+stamp+'-0.jpg'
-            cmd += ' -t ' +t + ' -q ' + q + ' -rot '+ rot +' -o '
-            ctx['name'] = name
-        cmd += file_dir+name
-        system(cmd)
-        refresh()
-        ctx['aaa'] = (cmd)
-    return render(request, "index.html", ctx)
-
-def manage(request):
-    global ctx
-    if request.POST:
-        pic_str = ''
-        pic_list = request.POST.getlist('pic',None)
+        pic_list = request.POST.getlist('picture',None)
+        l = []
         for i in pic_list:
-            pic_str += file_dir+i+' '
+            l.append(file_dir+i)
+        pic_str = ' '.join(l)
+
+        if 'capture' in request.POST:
+            r = request.POST.get('r',None).split('x')
+            w,h = (r[0],r[1])
+            q = request.POST.get('q',None)
+            n = int(request.POST.get('n',None))
+            delay = int(request.POST.get('delay',None))
+            rot = request.POST.get('rot',None)
+            cmd ='raspistill -w '+ w +' -h '+ h 
+            if(n!=1):
+                t = str((n-1)*delay)
+                tl = str(delay)
+                name = 'RaspiCam-'+stamp+'-%d.jpg'
+                cmd += ' -t '+ t + ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
+                ctx['name'] = name%0
+            else:
+                t = str(delay)
+                name = 'RaspiCam-'+stamp+'-0.jpg'
+                cmd += ' -t ' +t + ' -q ' + q + ' -rot '+ rot +' -o '
+                ctx['name'] = name
+            cmd += file_dir+name
+            system(cmd)
+            refresh()
+            ctx['aaa'] = (cmd)
+
         if 'download' in request.POST and pic_list:
             # package pics to zip and download it
             dl = {}
             down_dir = 'download/'
 
-            now = int(time())
-            # systime = strftime('%Y-%m-%d %H:%M:%S',localtime(now))
-            stamp = strftime('%Y-%m-%d-%H%M%S',localtime(now))
-
-            # sys_year = int(request.POST.get('sys_year',None))
-            # sys_month = int(request.POST.get('sys_month',None))
-            # sys_day = int(request.POST.get('sys_day',None))
-            # sys_hour = int(request.POST.get('sys_hour',None))
-            # sys_min = int(request.POST.get('sys_min',None))
-            # sys_sec = int(request.POST.get('sys_sec',None))
-            # stamp = '%4d%02d%02d_%02d%02d%02d'%(sys_year, sys_month, sys_day, sys_hour, sys_min, sys_sec)
-
             file_name = 'RaspiCam_'+stamp+'.zip'
             output_file = file_dir+down_dir+file_name
             dl['name'] = file_name
-            cmd  = 'zip -1 -o '+ output_file + ' '
+            cmd  = 'zip -1 -j -o '+ output_file + ' '
             cmd += pic_str
             system(cmd)
             ctx['aaa'] = cmd
@@ -93,25 +78,7 @@ def manage(request):
             system(cmd)
             ctx['aaa'] = cmd
         if 'manage' in request.POST:
-            ctx['aaa'] = 'clear info'
+            ctx['aaa'] = 'debug pic_str:',pic_str
         refresh()
         ctx['name']=''
     return render(request, "index.html", ctx)
-
-# def clock(request):
-#     global ctx
-#     if request.POST:
-#         year = request.POST.get('year',None)
-#         month = request.POST.get('month',None)
-#         day = request.POST.get('day',None)
-#         hour = request.POST.get('hour',None)
-#         min = request.POST.get('min',None)
-#         sec = request.POST.get('sec',None)
-#         cmd = 'sudo date -s '
-#         # cmd = 'date -s '
-#         cmd += '"'
-#         cmd += '%s-%s-%s %s:%s:%s'%(year,month,day,hour,min,sec)
-#         cmd += '"'
-#         ctx['aaa'] = (cmd)
-#         system(cmd)
-#     return render(request, "index.html",ctx)
