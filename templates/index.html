@@ -166,7 +166,7 @@ function alertTime(argument) {
             </tr>
         </table>
         {% for item in file_list%}
-            <div class="div1" style="background:url('/static/{{item}}') no-repeat;background-size: 100% 100%;" onclick="picShow('{{item}}')"> 
+            <div class="div1" style="background:url('/static/{{item}}') no-repeat;background-size: 100% 100%;"> 
                 <div class="div2">
                     <input type="checkbox" name="picture" value="{{item}}" />
                     <a href="/static/{{item}}" target="_blank">
