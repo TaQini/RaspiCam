@@ -21,6 +21,11 @@ $ sudo pip3 install Django
 $ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 ```
 
+# configure
+ - ap: see doc/ref-Zero-W-AP.md
+ - autorun: add start.sh to /etc/rc.local
+ - install zsh
+
 # Todo
  - user DIY args config (done)
  - photos manager (delete photos..., done)
