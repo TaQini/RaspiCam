@@ -25,7 +25,7 @@ $ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/insta
  - ap: see doc/ref-Zero-W-AP.md
  - autorun: add start.sh to /etc/rc.local
  - install zsh
-
+ - dns config: see doc/dns-config.md
 # Todo
  - user DIY args config (done)
  - photos manager (delete photos..., done)

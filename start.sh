@@ -1,5 +1,5 @@
 #!/bin/zsh
-/home/pi/RaspiCam/manage.py runserver 0.0.0.0:8080 & 
+sudo /home/pi/RaspiCam/manage.py runserver 0.0.0.0:80 & 
 
 # add follow code to /etc/rc.local before exit 0
 # ...
