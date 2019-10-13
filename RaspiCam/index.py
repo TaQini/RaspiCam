@@ -48,12 +48,10 @@ def index(request):
                 tl = str(delay)
                 name = 'RaspiCam-'+stamp+'-%d.jpg'
                 cmd += ' -t '+ t + ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
-                ctx['name'] = name%0
             else:
                 t = str(delay)
                 name = 'RaspiCam-'+stamp+'-0.jpg'
                 cmd += ' -t ' +t + ' -q ' + q + ' -rot '+ rot +' -o '
-                ctx['name'] = name
             cmd += file_dir+name
             system(cmd)
             refresh()
@@ -80,5 +78,4 @@ def index(request):
         if 'manage' in request.POST:
             ctx['aaa'] = 'debug pic_str:',pic_str
         refresh()
-        ctx['name']=''
     return render(request, "index.html", ctx)
