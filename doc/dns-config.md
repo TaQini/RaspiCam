@@ -12,4 +12,8 @@ address=/www.raspicam.com/192.168.0.1
 nameserver 127.0.0.1
 ```
 
-
+## reslove all urls to 192.168.0.1
+```
+address=/#/192.168.0.1
+```
+ - and modify ALLOW\_HOST in setting.py (add '\*')

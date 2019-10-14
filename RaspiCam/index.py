@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.views.decorators import csrf
-from os import system,listdir
+from os import system,listdir,path
 from .settings import STATICFILES_DIRS
 
 ctx = {}
@@ -48,11 +48,11 @@ def index(request):
             if(n!=1):
                 t = str((n-1)*delay)
                 tl = str(delay)
-                name = 'RaspiCam-'+stamp+'-%04d.jpg'
+                name = 'RaspiCam_'+stamp+'-%04d.jpg'
                 cmd += ' -t '+ t + ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
             else:
                 t = str(delay)
-                name = 'RaspiCam-'+stamp+'-0.jpg'
+                name = 'RaspiCam_'+stamp+'-0.jpg'
                 cmd += ' -t ' +t + ' -q ' + q + ' -rot '+ rot +' -o '
             cmd += file_dir+name
             system(cmd)
