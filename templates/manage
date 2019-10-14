@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript">
+function checkOrCancelAll() {
+    var chElt=document.getElementById("chElt");
+    var checkedElt = chElt.checked;
+    var allCheck = document.getElementsByName("dl_file");
+    if(checkedElt) {
+        for(var i=0;i<allCheck.length;i++) {
+            allCheck[i].checked=true;
+        }
+    }
+    else {
+        for(var i=0;i<allCheck.length;i++) {
+            allCheck[i].checked=false;
+        }
+    }
+}
+</script>
+
+<title>RaspiCam System - File Management </title>
+</head>
+<body>
+    <form action="/manage" method="post">
+        {% csrf_token %}
+        DEBUG: {{ aaa }}
+        </br>
+        <input type="submit" name="delete" value="Delete">
+        <input type="checkbox" id="chElt" onclick="checkOrCancelAll();">Select all
+        </br>
+
+        {% if no_file_selected%}
+            <p> no file selected, please select first. </p>
+        {% endif%}
+
+        {% if not dl_file_list%}
+            <p> no zip files in download folder </p>
+        {% endif%}
+
+        {% for item in dl_file_list%}
+            <input type="checkbox" name="dl_file" value="{{item}}" />
+            <a href="/static/download/{{item}}" target="_blank"> {{ item }} </a> 
+            </br>
+        {% endfor %}
+
+    </form>
+</body>
+</html>

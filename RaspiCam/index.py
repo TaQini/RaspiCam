@@ -7,6 +7,7 @@ from .settings import STATICFILES_DIRS
 
 ctx = {}
 file_dir = STATICFILES_DIRS[0]+'/'
+down_dir = file_dir+'download/'
 
 def refresh():
     global ctx
@@ -17,6 +18,7 @@ def refresh():
 
 def index(request):
     global ctx
+    ctx['no_pic_selected'] = False
     if request:
         refresh()
     if request.POST:
@@ -46,7 +48,7 @@ def index(request):
             if(n!=1):
                 t = str((n-1)*delay)
                 tl = str(delay)
-                name = 'RaspiCam-'+stamp+'-%d.jpg'
+                name = 'RaspiCam-'+stamp+'-%04d.jpg'
                 cmd += ' -t '+ t + ' -tl ' + tl + ' -q ' + q + ' -rot '+ rot +' -o '
             else:
                 t = str(delay)
@@ -57,25 +59,49 @@ def index(request):
             refresh()
             ctx['aaa'] = (cmd)
 
-        if 'download' in request.POST and pic_list:
-            # package pics to zip and download it
-            dl = {}
-            down_dir = 'download/'
-
-            file_name = 'RaspiCam_'+stamp+'.zip'
-            output_file = file_dir+down_dir+file_name
-            dl['name'] = file_name
-            cmd  = 'zip -1 -j -o '+ output_file + ' '
-            cmd += pic_str
-            system(cmd)
-            ctx['aaa'] = cmd
-            return render(request, "download.html", dl)
-        if 'delete' in request.POST and pic_list:
-            cmd = 'rm '
-            cmd += pic_str
-            system(cmd)
-            ctx['aaa'] = cmd
+        if 'download' in request.POST:
+            if not pic_list:
+                ctx['no_pic_selected'] = True
+            else:
+                # package pics to zip and download it
+                dl = {}
+                file_name = 'RaspiCam_'+stamp+'.zip'
+                output_file = down_dir+file_name
+                dl['name'] = file_name
+                cmd  = 'zip -1 -j -o '+ output_file + ' '
+                cmd += pic_str
+                system(cmd)
+                ctx['aaa'] = cmd
+                return render(request, "download.html", dl)
+        if 'delete' in request.POST:
+            if not pic_list:
+                ctx['no_pic_selected'] = True
+            else:
+                cmd = 'rm '
+                cmd += pic_str
+                system(cmd)
+                ctx['aaa'] = cmd
         if 'manage' in request.POST:
-            ctx['aaa'] = 'debug pic_str:',pic_str
+            ctx['aaa'] = 'debug :',pic_str,ctx['no_pic_selected']
         refresh()
     return render(request, "index.html", ctx)
+
+def manage(request):
+    m = {}
+    m['no_file_selected'] = False
+    if request.POST:
+        checked_file_list = request.POST.getlist('dl_file',None)
+        l = []
+        for i in checked_file_list:
+            l.append(down_dir+i)
+        file_str = ' '.join(l)
+        if 'delete' in request.POST:
+            if not file_str:
+                m['no_file_selected'] = True
+            else:
+                cmd = 'rm '
+                cmd += file_str
+                system(cmd)
+                m['aaa'] = cmd,file_str
+    m['dl_file_list'] = listdir(down_dir)
+    return render(request, "manage",m)

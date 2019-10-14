@@ -60,9 +60,9 @@ function hideElement() {
     }
 }
 
-function picShow(string) {
-    window.open("/static/"+string);
-}
+// function picShow(string) {
+//     window.open("/static/"+string);
+// }
 
 function updateTime() {
     var timer=setInterval(function () {
@@ -70,7 +70,7 @@ function updateTime() {
     },1000)
 }
 
-function alertTime(argument) {
+function alertTime() {
     var t=document.getElementById('sysTime');
     var myDate = new Date();
     var year = myDate.getFullYear();
@@ -88,6 +88,11 @@ function alertTime(argument) {
     t.innerText = 'Current time:';
     t.innerText += ' '+year+'-'+month+'-'+day+' '+hour+':'+min+':'+sec;
 }
+
+function gotomanage() {
+    window.open("/manage")
+}
+
 </script>
 
 <title>RaspiCam System</title>
@@ -152,12 +157,21 @@ function alertTime(argument) {
 
         <table border="0">        
             <tr>
-                <td> <input type="submit" name="manage" value="Manage"> </td>
+                <td> <input type="submit" name="manage" value="Manage" onclick="gotomanage()"> </td>
                 <td> <input type="submit" name="download" value="Download"> </td>
                 <td> <input type="submit" name="delete" value="Delete"> </td>
                 <td> <input type="checkbox" id="chElt" onclick="checkOrCancelAll();">Select all</td>
             </tr>
         </table>
+
+        {% if no_pic_selected%}
+            <p> no picture selected, please select first. </p>
+        {% endif%}
+
+        {% if not file_list%}
+            <p> no picture to show, please capture first. </p>
+        {% endif%}
+
         {% for item in file_list%}
             <div class="div1" style="background:url('/static/{{item}}') no-repeat;background-size: 100% 100%;"> 
                 <div class="div2">
