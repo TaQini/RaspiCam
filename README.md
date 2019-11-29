@@ -26,7 +26,14 @@ $ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/insta
  - autorun: add start.sh to /etc/rc.local
  - install zsh
  - dns config: see doc/dns-config.md
+
+# sources
+ - /etc/apt/sources.list
+```shell
+ deb http://raspbian.raspberrypi.org/raspbian/ buster main contrib non-free rpi
+```
+
 # Todo
- - user DIY args config (done)
- - photos manager (delete photos..., done)
+ - Image operation 
  - ...
+
